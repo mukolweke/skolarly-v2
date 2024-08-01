@@ -35,7 +35,6 @@
 </template>
 
 <script setup>
-	import { defineEmits } from 'vue'
 	import { ArrowRightIcon } from '@heroicons/vue/20/solid'
 
 	const props = defineProps({
