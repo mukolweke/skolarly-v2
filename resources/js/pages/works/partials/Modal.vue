@@ -37,6 +37,7 @@
 <script setup>
 	import { ArrowRightIcon } from '@heroicons/vue/20/solid'
 
+    
 	const props = defineProps({
 		isOpen: Boolean,
 		imageSrc: String,
