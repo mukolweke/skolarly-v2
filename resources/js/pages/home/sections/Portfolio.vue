@@ -1,7 +1,7 @@
 <script setup>
 
 import { ArrowRightIcon } from '@heroicons/vue/20/solid';
-const sampleProject = new URL('@/assets/images/sample-project.png', import.meta.url).href
+const sampleProject = new URL('../../../../assets/images/sample-project.png', import.meta.url).href
 
 import RedirectLink from '../../../components/layout/RedirectLink.vue';
 </script>
