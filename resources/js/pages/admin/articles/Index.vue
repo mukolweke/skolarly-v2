@@ -21,6 +21,7 @@ const Pagination = defineAsyncComponent(() =>
 const ModalWrapper = defineAsyncComponent(() =>
     import("../../../components/shared/ModalWrapper.vue")
 );
+const CreateForm = defineAsyncComponent(() => import("./Form.vue"));
 
 const articles = ref([
     {
@@ -33,7 +34,7 @@ const articles = ref([
     // Other articles
 ]);
 
-const currentPage = ref(1)
+const currentPage = ref(1);
 const handlePageClick = (page) => {
     currentPage.value = page;
 };
@@ -60,7 +61,11 @@ const toggleShowModal = () => {
         <div class="flex items-center justify-between">
             <search-bar label="Search articles" />
 
-            <button-view @click="toggleShowModal" class="w-1/6" label="Create Article" />
+            <button-view
+                @click="toggleShowModal"
+                class="w-1/6"
+                label="Create Article"
+            />
         </div>
         <div class="mt-10">
             <!-- Articles Table Listing -->
@@ -79,5 +84,13 @@ const toggleShowModal = () => {
         </div>
     </div>
 
-    <modal-wrapper title="Create Article" :show-modal="showModal" @cancel="toggleShowModal" @confirm="toggleShowModal" confirm-label="Create" />
+    <modal-wrapper
+        title="Create Article"
+        :show-modal="showModal"
+        @cancel="toggleShowModal"
+        @confirm="toggleShowModal"
+        confirm-label="Create"
+    >
+        <CreateForm />
+    </modal-wrapper>
 </template>
