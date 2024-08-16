@@ -6,7 +6,9 @@ import {
     EyeIcon,
     EyeSlashIcon,
 } from "@heroicons/vue/24/outline";
+
 import { defineAsyncComponent, ref } from "vue";
+
 const profileBanner = new URL(
     "@/assets/images/profile-banner.png",
     import.meta.url
@@ -24,6 +26,8 @@ const passwordForm = ref({
 const PasswordField = defineAsyncComponent(() =>
     import("../../../components/shared/PasswordField.vue")
 );
+
+const ButtonView = defineAsyncComponent(() => import('../../../components/shared/Button.vue'))
 </script>
 
 <template>
@@ -80,11 +84,7 @@ const PasswordField = defineAsyncComponent(() =>
                     />
 
                     <div class="">
-                        <button
-                            class="bg-primary hover:bg-opacity-80 transition-all text-white w-1/2 p-2.5 rounded-lg"
-                        >
-                            Update Password
-                        </button>
+                        <button-view label="Update Password" />
                     </div>
                 </form>
             </div>

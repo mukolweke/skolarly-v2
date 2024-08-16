@@ -1,21 +1,65 @@
 <script setup>
-import { defineAsyncComponent } from "vue";
-import { ChatBubbleBottomCenterTextIcon } from "@heroicons/vue/24/outline";
+import { defineAsyncComponent, ref } from "vue";
+import { ListBulletIcon, MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
 
 const Breadcrumb = defineAsyncComponent(() =>
     import("../../../components/shared/Breadcrumb.vue")
 );
+
+const ButtonView = defineAsyncComponent(() =>
+    import("../../../components/shared/Button.vue")
+);
+const SearchBar = defineAsyncComponent(() =>
+    import("../../../components/shared/SearchBar.vue")
+);
+const TableView = defineAsyncComponent(() =>
+    import("../../../components/shared/Table.vue")
+);
+const Pagination = defineAsyncComponent(() =>
+    import("../../../components/shared/Pagination.vue")
+);
+
+const testimonials = ref([
+    {
+        id: 1,
+        title: "Lorem Ipsum",
+        author: "John Doe",
+        date: "2022-01-01",
+        actions: "",
+    },
+    // Other testimonials
+]);
+
+const handlePageClick = () => {};
 </script>
 
 <template>
     <breadcrumb
+        class="mb-10"
         name="Testimonials"
         :links="[
-            { name: 'Home', to: '/' },
-            { name: 'Testimonials', to: '/testimonials' },
+            { name: 'Home', to: '/admin' },
+            { name: 'Testimonials', to: '/admin/testimonials' },
         ]"
-        :icon="ChatBubbleBottomCenterTextIcon"
+        :icon="ListBulletIcon"
     />
 
-    <router-link to="/admin"> Go Home </router-link>
+    <div class="border p-5 rounded-lg">
+        <div class="flex items-center justify-between">
+            <search-bar label="Search testimonials" />
+
+            <button-view class="w-1/6" label="Create Testimonial" />
+        </div>
+        <div class="mt-10">
+            <!-- Testimonials Table Listing -->
+            <table-view class="mb-5" :items="testimonials"></table-view>
+
+            <!-- Pagination -->
+            <pagination
+                :pages="[1, 2, 3, 4, 5]"
+                :currentPage="1"
+                @page-click="handlePageClick"
+            />
+        </div>
+    </div>
 </template>

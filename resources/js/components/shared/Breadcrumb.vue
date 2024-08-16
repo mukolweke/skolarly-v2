@@ -9,7 +9,7 @@ const props = defineProps({
         default: () => [],
     },
     icon: {
-        type: Object,
+        type: Function,
         required: false,
         default: null,
     },
