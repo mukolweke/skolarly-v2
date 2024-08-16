@@ -1,16 +1,20 @@
 <template>
-  <div>
-    <NavBar />
-
-    <router-view></router-view>
-
-    <Footer />
-  </div>
+    <component :is="layout">
+        <router-view />
+    </component>
 </template>
 
 <script setup>
-import { defineAsyncComponent} from 'vue'
+import { computed, defineAsyncComponent } from "vue";
+import { useRoute } from "vue-router";
 
-const NavBar = defineAsyncComponent(() => import('./components/layout/NavBar.vue'))
-const Footer = defineAsyncComponent(() => import('./components/layout/Footer.vue'))
+const route = useRoute();
+
+const layout = computed(() => {
+    return route.meta.layout
+        ? defineAsyncComponent(() =>
+              import(`./layouts/${route.meta.layout}.vue`)
+          )
+        : defineAsyncComponent(() => import("./layouts/DefaultLayout.vue"));
+});
 </script>
