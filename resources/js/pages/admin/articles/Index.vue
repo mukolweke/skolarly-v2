@@ -1,6 +1,6 @@
 <script setup>
 import { defineAsyncComponent, ref } from "vue";
-import { ListBulletIcon, MagnifyingGlassIcon } from "@heroicons/vue/24/outline";
+import { ListBulletIcon } from "@heroicons/vue/24/outline";
 
 const Breadcrumb = defineAsyncComponent(() =>
     import("../../../components/shared/Breadcrumb.vue")
