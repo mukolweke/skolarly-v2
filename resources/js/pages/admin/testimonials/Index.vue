@@ -22,15 +22,18 @@ const Pagination = defineAsyncComponent(() =>
 const testimonials = ref([
     {
         id: 1,
-        title: "Lorem Ipsum",
-        author: "John Doe",
-        date: "2022-01-01",
+        name: "John Doe",
+        email: "johndoe@gmailc.om",
         actions: "",
     },
     // Other testimonials
 ]);
 
-const handlePageClick = () => {};
+const currentPage = ref(1)
+
+const handlePageClick = (page) => {
+    currentPage.value = page;
+};
 </script>
 
 <template>
@@ -52,12 +55,12 @@ const handlePageClick = () => {};
         </div>
         <div class="mt-10">
             <!-- Testimonials Table Listing -->
-            <table-view class="mb-5" :items="testimonials"></table-view>
+            <table-view class="mb-5" :items="testimonials" :headers="['id', 'name', 'email', 'actions']"></table-view>
 
             <!-- Pagination -->
             <pagination
                 :pages="[1, 2, 3, 4, 5]"
-                :currentPage="1"
+                :currentPage="currentPage"
                 @page-click="handlePageClick"
             />
         </div>

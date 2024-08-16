@@ -30,7 +30,10 @@ const articles = ref([
     // Other articles
 ]);
 
-const handlePageClick = () => {};
+const currentPage = ref(1)
+const handlePageClick = (page) => {
+    currentPage.value = page;
+};
 </script>
 
 <template>
@@ -52,12 +55,16 @@ const handlePageClick = () => {};
         </div>
         <div class="mt-10">
             <!-- Articles Table Listing -->
-            <table-view class="mb-5" :items="articles"></table-view>
+            <table-view
+                class="mb-5"
+                :items="articles"
+                :headers="['id', 'title', 'author', 'date', 'actions']"
+            ></table-view>
 
             <!-- Pagination -->
             <pagination
                 :pages="[1, 2, 3, 4, 5]"
-                :currentPage="1"
+                :currentPage="currentPage"
                 @page-click="handlePageClick"
             />
         </div>
