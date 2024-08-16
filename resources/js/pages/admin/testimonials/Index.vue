@@ -1,9 +1,21 @@
-<script setup></script>
+<script setup>
+import { defineAsyncComponent } from "vue";
+import { ChatBubbleBottomCenterTextIcon } from "@heroicons/vue/24/outline";
+
+const Breadcrumb = defineAsyncComponent(() =>
+    import("../../../components/shared/Breadcrumb.vue")
+);
+</script>
 
 <template>
-    <div>Testimonials Admin section</div>
+    <breadcrumb
+        name="Testimonials"
+        :links="[
+            { name: 'Home', to: '/' },
+            { name: 'Testimonials', to: '/testimonials' },
+        ]"
+        :icon="ChatBubbleBottomCenterTextIcon"
+    />
 
-    <router-link to="/admin">
-        Go Home
-       </router-link>
+    <router-link to="/admin"> Go Home </router-link>
 </template>
