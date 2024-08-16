@@ -30,7 +30,7 @@ const props = defineProps({
                     class="flex items-center"
                 >
                     <router-link :to="link.to">{{ link.name }}</router-link>
-                    <span v-if="index < links.length - 1" class="mx-2">.</span>
+                    <span v-if="index < links.length - 1" class="mx-2 font-karla">.</span>
                 </li>
             </ul>
         </div>

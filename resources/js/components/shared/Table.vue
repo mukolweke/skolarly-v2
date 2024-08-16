@@ -2,7 +2,7 @@
     <table class="w-full border-none">
         <thead class="border-b">
             <tr>
-                <th v-for="header in headers" :key="header" class="p-4 font-medium text-lg text-left capitalize">
+                <th v-for="header in headers" :key="header" class="p-4 font-medium font-karla text-left capitalize">
                     {{ header }}
                 </th>
             </tr>

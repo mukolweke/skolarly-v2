@@ -18,6 +18,9 @@ const TableView = defineAsyncComponent(() =>
 const Pagination = defineAsyncComponent(() =>
     import("../../../components/shared/Pagination.vue")
 );
+const ModalWrapper = defineAsyncComponent(() =>
+    import("../../../components/shared/ModalWrapper.vue")
+);
 
 const testimonials = ref([
     {
@@ -29,10 +32,16 @@ const testimonials = ref([
     // Other testimonials
 ]);
 
-const currentPage = ref(1)
+const currentPage = ref(1);
 
 const handlePageClick = (page) => {
     currentPage.value = page;
+};
+
+const showModal = ref(false);
+
+const toggleShowModal = () => {
+    showModal.value = !showModal.value;
 };
 </script>
 
@@ -51,11 +60,19 @@ const handlePageClick = (page) => {
         <div class="flex items-center justify-between">
             <search-bar label="Search testimonials" />
 
-            <button-view class="w-1/6" label="Create Testimonial" />
+            <button-view
+                @click="toggleShowModal"
+                class="w-1/6"
+                label="Create Testimonial"
+            />
         </div>
         <div class="mt-10">
             <!-- Testimonials Table Listing -->
-            <table-view class="mb-5" :items="testimonials" :headers="['id', 'name', 'email', 'actions']"></table-view>
+            <table-view
+                class="mb-5"
+                :items="testimonials"
+                :headers="['id', 'name', 'email', 'actions']"
+            ></table-view>
 
             <!-- Pagination -->
             <pagination
@@ -65,4 +82,12 @@ const handlePageClick = (page) => {
             />
         </div>
     </div>
+
+    <modal-wrapper
+        title="Create Testimonial"
+        :show-modal="showModal"
+        @cancel="toggleShowModal"
+        @confirm="toggleShowModal"
+        confirm-label="Create"
+    />
 </template>
