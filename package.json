@@ -15,13 +15,14 @@
     },
     "dependencies": {
         "@heroicons/vue": "^2.1.5",
-        "pinia": "2.0.24",
         "@vitejs/plugin-vue": "^5.1.2",
-        "vue": "^3.4.35",
-        "vue-router": "^4.4.2",
         "autoprefixer": "^10.4.19",
         "chromedriver": "107.0.3",
         "geckodriver": "3.2.0",
-        "nightwatch": "2.5.1"
+        "nightwatch": "2.5.1",
+        "pinia": "2.0.24",
+        "quill": "^2.0.2",
+        "vue": "^3.4.35",
+        "vue-router": "^4.4.2"
     }
 }

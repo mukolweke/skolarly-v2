@@ -20,7 +20,7 @@ const emit = defineEmits(["cancel", "confirm"]);
         v-if="showModal"
         class="absolute inset-0 bg-black bg-opacity-25 flex items-center justify-center"
     >
-        <section class="bg-white max-w-lg w-full p-5 rounded-lg">
+        <section class="bg-white max-w-4xl w-full p-5 rounded-lg">
             <h1 class="font-karla font-medium uppercase">
                 {{ title }}
             </h1>

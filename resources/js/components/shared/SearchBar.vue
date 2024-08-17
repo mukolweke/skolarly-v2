@@ -1,6 +1,6 @@
 <template>
     <div class="w-1/3">
-        <label for="search" class="block text-sm font-medium text-gray-700">
+        <label for="search" class="block text-sm font-medium text-gray-700 capitalize">
             {{ label }}
         </label>
         <div class="mt-1 relative rounded-md shadow-sm">
