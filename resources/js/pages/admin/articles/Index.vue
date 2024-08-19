@@ -44,6 +44,22 @@ const showModal = ref(false);
 const toggleShowModal = () => {
     showModal.value = !showModal.value;
 };
+
+const createFormRef = ref(null);
+
+const submitForm = () => {
+    if (createFormRef.value && typeof createFormRef.value.saveArticle === 'function') {
+        createFormRef.value.saveArticle()
+            .then(() => {
+                toggleShowModal();
+            })
+            .catch(error => {
+                console.error('Error saving article:', error);
+            });
+    } else {
+        console.error('saveArticle method is not available on CreateForm');
+    }
+};
 </script>
 
 <template>
@@ -88,9 +104,9 @@ const toggleShowModal = () => {
         title="Create Article"
         :show-modal="showModal"
         @cancel="toggleShowModal"
-        @confirm="toggleShowModal"
+        @confirm="submitForm"
         confirm-label="Create"
     >
-        <CreateForm />
+        <CreateForm ref="createFormRef" />
     </modal-wrapper>
 </template>
