@@ -1,112 +1,108 @@
 <script setup>
-import { defineAsyncComponent, ref } from "vue";
+import { defineAsyncComponent, onMounted, ref, watch } from "vue";
 import { ListBulletIcon } from "@heroicons/vue/24/outline";
+import axios from "axios";
 
-const Breadcrumb = defineAsyncComponent(() =>
-    import("../../../components/shared/Breadcrumb.vue")
-);
-
-const ButtonView = defineAsyncComponent(() =>
-    import("../../../components/shared/Button.vue")
-);
-const SearchBar = defineAsyncComponent(() =>
-    import("../../../components/shared/SearchBar.vue")
-);
-const TableView = defineAsyncComponent(() =>
-    import("../../../components/shared/Table.vue")
-);
-const Pagination = defineAsyncComponent(() =>
-    import("../../../components/shared/Pagination.vue")
-);
-const ModalWrapper = defineAsyncComponent(() =>
-    import("../../../components/shared/ModalWrapper.vue")
-);
+// Async component imports
+const Breadcrumb = defineAsyncComponent(() => import("../../../components/shared/Breadcrumb.vue"));
+const ButtonView = defineAsyncComponent(() => import("../../../components/shared/Button.vue"));
+const SearchBar = defineAsyncComponent(() => import("../../../components/shared/SearchBar.vue"));
+const TableView = defineAsyncComponent(() => import("../../../components/shared/Table.vue"));
+const Pagination = defineAsyncComponent(() => import("../../../components/shared/Pagination.vue"));
+const ModalWrapper = defineAsyncComponent(() => import("../../../components/shared/ModalWrapper.vue"));
 const CreateForm = defineAsyncComponent(() => import("./Form.vue"));
 
-const articles = ref([
-    {
-        id: 1,
-        title: "Lorem Ipsum",
-        author: "John Doe",
-        date: "2022-01-01",
-        actions: "",
-    },
-    // Other articles
-]);
-
+const articles = ref([]);
+const pages = ref([]);
 const currentPage = ref(1);
-const handlePageClick = (page) => {
-    currentPage.value = page;
-};
-
 const showModal = ref(false);
-
-const toggleShowModal = () => {
-    showModal.value = !showModal.value;
-};
-
 const createFormRef = ref(null);
 
-const submitForm = () => {
-    if (createFormRef.value && typeof createFormRef.value.saveArticle === 'function') {
-        createFormRef.value.saveArticle()
-            .then(() => {
-                toggleShowModal();
-            })
-            .catch(error => {
-                console.error('Error saving article:', error);
-            });
+// Toggle modal visibility
+const toggleShowModal = () => {
+    showModal.value = !showModal.value;
+    document.body.classList.toggle('fixed');
+};
+
+// Submit form
+const submitForm = async () => {
+    if (createFormRef.value?.saveArticle) {
+        try {
+            await createFormRef.value.saveArticle();
+            // toggleShowModal();
+        } catch (error) {
+            console.error("Error saving article:", error);
+        }
     } else {
-        console.error('saveArticle method is not available on CreateForm');
+        console.error("saveArticle method is not available on CreateForm");
     }
 };
+
+// Fetch articles
+const getArticles = async () => {
+    try {
+        const { data } = await axios.get(`/articles?page=${currentPage.value}`);
+        articles.value = data;
+        pages.value = Array.from({ length: data.last_page }, (_, i) => i + 1);
+    } catch (error) {
+        console.error("Error fetching articles:", error);
+    }
+};
+
+// Watch for page changes and fetch articles accordingly
+watch(currentPage, getArticles);
+watch(showModal, (value) => {
+    if (!value) {
+        getArticles()
+    }
+});
+
+// Initial fetch on mount
+onMounted(getArticles);
 </script>
 
 <template>
-    <breadcrumb
+    <Breadcrumb
         class="mb-10"
         name="Articles"
         :links="[
             { name: 'Home', to: '/admin' },
-            { name: 'Articles', to: '/admin/articles' },
+            { name: 'Articles', to: '/admin/articles' }
         ]"
         :icon="ListBulletIcon"
     />
 
     <div class="border p-5 rounded-lg">
-        <div class="flex items-center justify-between">
-            <search-bar label="Search articles" />
-
-            <button-view
-                @click="toggleShowModal"
-                class="w-1/6"
-                label="Create Article"
-            />
+        <div class="flex items-end justify-between gap-6">
+            <SearchBar label="Search articles" />
+            <ButtonView @click="toggleShowModal" class="w-1/2 lg:w-1/6" label="Create Article" />
         </div>
-        <div class="mt-10">
-            <!-- Articles Table Listing -->
-            <table-view
-                class="mb-5"
-                :items="articles"
-                :headers="['id', 'title', 'author', 'date', 'actions']"
-            ></table-view>
 
-            <!-- Pagination -->
-            <pagination
-                :pages="[1, 2, 3, 4, 5]"
+        <div class="mt-10">
+            <TableView
+                class="mb-5"
+                :items="articles.data"
+                :headers="['id', 'title', 'slug', 'author', 'published_date']"
+            />
+
+            <Pagination
+                v-if="articles.total > articles.per_page"
+                :pages="pages"
                 :currentPage="currentPage"
-                @page-click="handlePageClick"
+                @page-click="currentPage = $event"
+                @prev-click="currentPage--"
+                @next-click="currentPage++"
             />
         </div>
     </div>
 
-    <modal-wrapper
+    <ModalWrapper
         title="Create Article"
         :show-modal="showModal"
         @cancel="toggleShowModal"
         @confirm="submitForm"
         confirm-label="Create"
     >
-        <CreateForm ref="createFormRef" />
-    </modal-wrapper>
+        <CreateForm ref="createFormRef" @success="toggleShowModal" />
+    </ModalWrapper>
 </template>

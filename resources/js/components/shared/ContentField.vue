@@ -10,6 +10,7 @@
         >
             {{ helpText }}
         </p>
+        <p v-if="error" class="text-xs mt-px text-red-500 font-karla font-medium">{{ error }}</p>
     </div>
 </template>
 
@@ -29,6 +30,10 @@ const props = defineProps({
         default: "text",
     },
     helpText: {
+        type: String,
+        default: "",
+    },
+    error: {
         type: String,
         default: "",
     },

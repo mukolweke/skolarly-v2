@@ -3,13 +3,18 @@
 namespace App\Http\Repositories;
 
 use App\Models\Article;
+use App\Transformers\ArticleTransformer;
 use Illuminate\Support\Str;
 
 class ArticleRepository
 {
     public function getAll()
     {
-        return Article::all();
+        $articles = Article::latest()->paginate(Article::PAGINATION_PER_PAGE);
+
+        ArticleTransformer::transformCollection($articles);
+
+        return $articles;
     }
 
     public function create(array $data)
@@ -21,7 +26,13 @@ class ArticleRepository
 
     public function findBySlug($slug)
     {
-        return Article::where('slug', $slug)->first();
+        $article = Article::where('slug', $slug)->first();
+
+        if (!empty($article)) {
+            return ArticleTransformer::transform($article);
+        }
+
+        return null;
     }
 
     public function update(Article $article, array $data)

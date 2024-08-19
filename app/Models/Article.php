@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
@@ -9,6 +10,8 @@ use Illuminate\Support\Str;
 class Article extends Model
 {
     use HasFactory;
+
+    const PAGINATION_PER_PAGE = 10;
 
     protected $fillable = [
         'title',
@@ -30,5 +33,15 @@ class Article extends Model
                 $article->slug = Str::slug($article->title);
             }
         });
+    }
+
+    public function scopePublished($query)
+    {
+        return $query->where('published_date', '<', Carbon::now());
+    }
+
+    public function getIsPublishedAttribute()
+    {
+        return $this->published_date !== null && Carbon::parse($this->published_date)->lte(Carbon::today());
     }
 }

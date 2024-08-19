@@ -3,7 +3,7 @@ import { defineAsyncComponent, ref, watch } from 'vue'
 
 const NavLink = defineAsyncComponent(() => import('./NavLink.vue'))
 import { Bars3Icon, XMarkIcon } from '@heroicons/vue/24/solid'
-const logo = new URL('@/assets/images/logo.png', import.meta.url).href
+const logo = new URL('../../../assets/images/logo.png', import.meta.url).href
 
 const routes = ref([
   { path: '/services', name: 'Services' },

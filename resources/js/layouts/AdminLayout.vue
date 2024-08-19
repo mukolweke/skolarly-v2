@@ -105,5 +105,5 @@ const isActive = (path) => {
   return route.path === path;
 };
 
-const logo = new URL("@/assets/images/logo.png", import.meta.url).href;
+const logo = new URL("../../assets/images/logo.png", import.meta.url).href;
 </script>

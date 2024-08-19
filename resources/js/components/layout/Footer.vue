@@ -1,7 +1,7 @@
 <script setup>
 	import { MapPinIcon, EnvelopeIcon, PhoneIcon } from '@heroicons/vue/20/solid'
 	import { defineAsyncComponent, onMounted, ref } from 'vue'
-	const logo = new URL('@/assets/images/logo.png', import.meta.url).href
+	const logo = new URL('../../../assets/images/logo.png', import.meta.url).href
 
 	const currentYear = ref(new Date().getFullYear())
 
