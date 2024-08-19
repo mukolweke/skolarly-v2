@@ -17,6 +17,7 @@ const pages = ref([]);
 const currentPage = ref(1);
 const showModal = ref(false);
 const createFormRef = ref(null);
+const searchQuery = ref('');
 
 // Toggle modal visibility
 const toggleShowModal = () => {
@@ -41,12 +42,18 @@ const submitForm = async () => {
 // Fetch articles
 const getArticles = async () => {
     try {
-        const { data } = await axios.get(`/articles?page=${currentPage.value}`);
+        const { data } = await axios.get(`/articles?page=${currentPage.value}&search=${searchQuery.value}`);
         articles.value = data;
         pages.value = Array.from({ length: data.last_page }, (_, i) => i + 1);
     } catch (error) {
         console.error("Error fetching articles:", error);
     }
+};
+
+const onSearch = (query) => {
+    searchQuery.value = query;
+    currentPage.value = 1;  // Reset to the first page on new search
+    getArticles();
 };
 
 // Watch for page changes and fetch articles accordingly
@@ -74,7 +81,7 @@ onMounted(getArticles);
 
     <div class="border p-5 rounded-lg">
         <div class="flex items-end justify-between gap-6">
-            <SearchBar label="Search articles" />
+            <SearchBar label="Search articles" @search="onSearch" />
             <ButtonView @click="toggleShowModal" class="w-1/2 lg:w-1/6" label="Create Article" />
         </div>
 

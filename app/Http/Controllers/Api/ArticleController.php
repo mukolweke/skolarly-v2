@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticlePostRequest;
 use App\Http\Repositories\ArticleRepository;
 use App\Models\Article;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -16,9 +17,11 @@ class ArticleController extends Controller
         $this->repository = $repository;
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        return $this->repository->getAll();
+        $search = $request->input('search');
+
+        return $this->repository->getAll($search);
     }
 
     public function store(ArticlePostRequest $request)

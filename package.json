@@ -20,6 +20,7 @@
         "autoprefixer": "^10.4.19",
         "chromedriver": "107.0.3",
         "geckodriver": "3.2.0",
+        "lodash": "^4.17.21",
         "nightwatch": "2.5.1",
         "pinia": "2.0.24",
         "quill": "^2.0.2",

@@ -8,9 +8,18 @@ use Illuminate\Support\Str;
 
 class ArticleRepository
 {
-    public function getAll()
+    public function getAll($search = '')
     {
-        $articles = Article::latest()->paginate(Article::PAGINATION_PER_PAGE);
+        $query = Article::query();
+
+        if ($search) {
+            $query->where('title', 'LIKE', "%{$search}%")
+            ->orWhere('excerpt', 'LIKE', "%{$search}%")
+            ->orWhere('author', 'LIKE', "%{$search}%")
+            ->orWhere('content', 'LIKE', "%{$search}%");
+        }
+
+        $articles = $query->latest()->paginate(Article::PAGINATION_PER_PAGE);
 
         ArticleTransformer::transformCollection($articles);
 
