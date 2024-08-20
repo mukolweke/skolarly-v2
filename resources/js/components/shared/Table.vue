@@ -20,12 +20,10 @@
                 :key="item.id"
                 class="border-b transition-all hover:bg-primary hover:bg-opacity-10"
             >
-                <td
-                    v-for="header in headers"
-                    :key="header"
-                    class="p-4 text-left font-light text-base"
-                >
-                    {{ item[header] }}
+                <td v-for="header in headers" :key="header" class="p-4 text-left font-light">
+                    <slot :name="header" :item="item">
+                        {{ item[header] }}
+                    </slot>
                 </td>
                 <td class="p-4 text-left font-light text-base">
                     <div class="flex items-center gap-5">

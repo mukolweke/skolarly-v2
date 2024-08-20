@@ -141,22 +141,28 @@ onMounted(getArticles);
         <div class="mt-10">
             <TableView
                 :items="articles.data"
-                :headers="['id', 'title', 'slug', 'author', 'published_date']"
+                :headers="['id', 'title', 'slug', 'author', 'is_published', 'published_date']"
                 @delete="deleteArticle"
                 @update="updateArticle"
             >
-                <template v-slot:details="slotProps">
-                    <show-article :article="slotProps.item"></show-article>
+                <template v-slot:is_published="{ item }">
+                    <span :class="item.is_published ? 'bg-green-500' : 'bg-red-500'" class="text-white p-1 px-2 rounded">
+                        {{ item.is_published ? 'Published' : 'Unpublished' }}
+                    </span>
                 </template>
 
-                <template v-slot:update="slotProps">
+                <template v-slot:details="{ item }">
+                    <show-article :article="item"></show-article>
+                </template>
+
+                <template v-slot:update="{ item }">
                     <create-form
                         class="max-w-[900px]"
                         ref="updateFormRef"
                         method-type="put"
                         @success="() => showEditModal = false"
                         @error="() => showEditModal = true"
-                        :article="slotProps.item"
+                        :article="item"
                     />
                 </template>
             </TableView>

@@ -33,6 +33,7 @@ class ArticleTransformer
             'excerpt' => $article->excerpt,
             'content' => $article->content,
             'published_date' => Carbon::parse($article->published_date)->toFormattedDateString(),
+            'is_published' => $article->is_published,
         ];
     }
 }
