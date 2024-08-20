@@ -146,7 +146,7 @@ onMounted(getArticles);
                 @update="updateArticle"
             >
                 <template v-slot:is_published="{ item }">
-                    <span :class="item.is_published ? 'bg-green-500' : 'bg-red-500'" class="text-white p-1 px-2 rounded">
+                    <span :class="item.is_published ? 'bg-green-500' : 'bg-red-500'" class="text-white p-1 px-2 rounded text-sm">
                         {{ item.is_published ? 'Published' : 'Unpublished' }}
                     </span>
                 </template>

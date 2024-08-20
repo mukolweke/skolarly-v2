@@ -6,7 +6,7 @@ const props = defineProps({
     modelValue: String,
     label: {
         type: String,
-        required: true,
+        default: '',
     },
     inputType: {
         type: String,

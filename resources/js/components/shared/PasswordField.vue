@@ -35,7 +35,7 @@ const updateValue = (event) => {
                 @input="updateValue"
                 placeholder="********"
                 autocomplete="off"
-                class="h-12 border border-primary focus:border-secondary w-1/2 rounded-lg px-5 text-sm"
+                class="h-12 border border-primary focus:border-secondary w-full rounded-lg px-5 text-sm"
             />
 
             <div
