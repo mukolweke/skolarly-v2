@@ -39,12 +39,14 @@ class ArticleController extends Controller
     public function update(ArticlePostRequest $request, Article $article)
     {
         $article = $this->repository->update($article, $request->validated());
+
         return response()->json($article, 200);
     }
 
     public function destroy(Article $article)
     {
         $this->repository->delete($article);
+
         return response()->json(null, 204);
     }
 }

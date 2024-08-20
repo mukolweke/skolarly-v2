@@ -3,6 +3,7 @@
 namespace App\Transformers;
 
 use App\Models\Article;
+use Carbon\Carbon;
 
 class ArticleTransformer
 {
@@ -31,9 +32,7 @@ class ArticleTransformer
             'author' => $article->author,
             'excerpt' => $article->excerpt,
             'content' => $article->content,
-            'published_date' => $article->published_date,
-            'created_at' => $article->created_at,
-            'updated_at' => $article->updated_at,
+            'published_date' => Carbon::parse($article->published_date)->toFormattedDateString(),
         ];
     }
 }

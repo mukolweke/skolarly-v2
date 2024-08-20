@@ -11,7 +11,10 @@ class Article extends Model
 {
     use HasFactory;
 
-    const PAGINATION_PER_PAGE = 10;
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
 
     protected $fillable = [
         'title',

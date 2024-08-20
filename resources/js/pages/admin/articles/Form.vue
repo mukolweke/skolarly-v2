@@ -12,28 +12,44 @@ const ContentField = defineAsyncComponent(() =>
     import("../../../components/shared/ContentField.vue")
 );
 
-const emit = defineEmits(['success'])
+const props = defineProps({
+    article: {
+        type: Object,
+        default: () => {}
+    },
+    methodType: {
+        type: String,
+        default: 'post',
+    }
+})
+
+const emit = defineEmits(['success', 'error'])
 
 const manageForm = ref({
-    title: "",
-    author: "",
-    excerpt: "",
-    content: "",
-    published_date: format(new Date(), "yyyy-MM-dd"),
+    slug: props.article ? props.article.slug : '',
+    title: props.article ? props.article.title : '',
+    author: props.article ? props.article.author : '',
+    excerpt: props.article ? props.article.excerpt : '',
+    content: props.article ? props.article.content : '',
+    published_date: format(props.article ? props.article.published_date : new Date(), "yyyy-MM-dd"),
 });
 
 const errors = ref({});
 
 const saveArticle = async () => {
     try {
-        const response = await axios.post("/articles", manageForm.value);
+        const response = await axios[props.methodType.toLowerCase()](
+            props.methodType.toLowerCase() === 'put' ? `/articles/${manageForm.value.slug}` : "/articles",
+            manageForm.value
+        );
 
-        if (response.status == 201) {
+        if (response.status == 201 || response.status == 200) {
             emit('success')
         }
         console.log("success message alert", response);
     } catch (error) {
         if (error.response && error.response.data.errors) {
+            emit('error')
             errors.value = error.response.data.errors;
         }
     }

@@ -23,7 +23,7 @@ class ArticlePostRequest extends FormRequest
      */
     public function rules(): array
     {
-        $rules = [
+        return [
             'title' => 'required|string|max:255',
             'author' => 'required|string|max:255',
             'excerpt' => 'required|string',
@@ -33,27 +33,12 @@ class ArticlePostRequest extends FormRequest
                 'date',
             ],
         ];
-
-        if ($this->isEdit()) {
-            $rules['published_date'][] = Rule::afterOrEqual(Carbon::now()->subMonth());
-        }
-
-        return $rules;
-    }
-
-    /**
-     * Determine if the request is for an edit.
-     */
-    private function isEdit(): bool
-    {
-        return request()->has('id');
     }
 
     public function messages(): array
     {
         return [
             'published_date.date' => 'The published date must be a valid date.',
-            'published_date.after_or_equal' => 'The published date cannot be more than one month in the past.',
         ];
     }
 }
