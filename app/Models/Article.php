@@ -25,6 +25,16 @@ class Article extends Model
         'published_date',
     ];
 
+    protected $cast = [
+        'title' => 'string',
+        'slug' => 'string',
+        'author' => 'string',
+        'excerpt' => 'string',
+        'content' => 'string',
+        'published_date' => 'date',
+    ];
+
+
     protected static function booted()
     {
         static::creating(function ($article) {

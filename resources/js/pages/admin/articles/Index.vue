@@ -25,7 +25,7 @@ const ModalWrapper = defineAsyncComponent(() =>
 
 import ShowArticle from './Show.vue'
 
-const CreateForm = defineAsyncComponent(() => import("./Form.vue"));
+const ManageForm = defineAsyncComponent(() => import("./Form.vue"));
 
 const articles = ref([]);
 const pages = ref([]);
@@ -156,7 +156,7 @@ onMounted(getArticles);
                 </template>
 
                 <template v-slot:update="{ item }">
-                    <create-form
+                    <manage-form
                         class="max-w-[900px]"
                         ref="updateFormRef"
                         method-type="put"
@@ -186,6 +186,6 @@ onMounted(getArticles);
         @confirm="submitForm"
         confirm-label="Create"
     >
-        <CreateForm ref="createFormRef" @success="toggleShowModal" />
+        <manage-form ref="createFormRef" @success="toggleShowModal" />
     </ModalWrapper>
 </template>
