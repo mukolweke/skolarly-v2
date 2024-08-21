@@ -1,6 +1,10 @@
 <script setup>
+import {
+    UserIcon,
+} from "@heroicons/vue/24/outline";
+
 const profileBanner = new URL(
-    "@/assets/images/profile-banner.png",
+    "../../../../assets/images/profile-banner.png",
     import.meta.url
 ).href;
 

@@ -80,7 +80,7 @@ onMounted(() => {
             <PencilSquareIcon
                 v-if="!isEditing"
                 @click="toggleEditMode"
-                class="cursor-pointer size-6 text-primary-darker"
+                class="cursor-pointer size-6 text-secondary"
             />
         </div>
 
