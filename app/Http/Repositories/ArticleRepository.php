@@ -19,7 +19,7 @@ class ArticleRepository
             ->orWhere('content', 'LIKE', "%{$search}%");
         }
 
-        $articles = $query->latest()->paginate();
+        $articles = $query->latest()->paginate(Article::PAGINATE_PER_PAGE);
 
         ArticleTransformer::transformCollection($articles);
 

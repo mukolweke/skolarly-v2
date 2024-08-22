@@ -17,7 +17,7 @@ class TestimonialRepository
             ->orWhere('content', 'LIKE', "%{$search}%");
         }
 
-        $testimonials = $query->latest()->paginate();
+        $testimonials = $query->latest()->paginate(Testimonial::PAGINATE_PER_PAGE);
 
         TestimonialTransformer::transformCollection($testimonials);
 

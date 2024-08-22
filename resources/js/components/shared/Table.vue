@@ -9,7 +9,7 @@
                 >
                     {{ header.replace("_", " ") }}
                 </th>
-                <th class="p-4 font-medium font-karla text-left capitalize">
+                <th v-if="showActions" class="p-4 font-medium font-karla text-left capitalize">
                     actions
                 </th>
             </tr>
@@ -25,7 +25,7 @@
                         {{ item[header] }}
                     </slot>
                 </td>
-                <td class="p-4 text-left font-light text-base">
+                <td v-if="showActions" class="p-4 text-left font-light text-base">
                     <div class="flex items-center gap-5">
                         <EyeIcon
                             @click="toggleShowViewModal(item)"
@@ -146,5 +146,9 @@ const updateForm = async () => {
 defineProps({
     items: Array,
     headers: Array,
+    showActions: {
+        type: Boolean,
+        default: true,
+    }
 });
 </script>

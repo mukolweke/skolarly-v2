@@ -19,7 +19,7 @@ const props = defineProps({
         class="bg-primary bg-opacity-10 rounded-lg p-5 px-10 flex justify-between items-center"
     >
         <div>
-            <h1 class="text-xl font-medium mb-5">{{ name }}</h1>
+            <h1 class="text-lg font-semibold mb-5 uppercase font-karla">{{ name }}</h1>
 
             <ul class="flex space-x-2">
                 <li

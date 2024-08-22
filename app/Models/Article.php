@@ -16,6 +16,8 @@ class Article extends Model
         return 'slug';
     }
 
+    const PAGINATE_PER_PAGE = 10;
+
     protected $fillable = [
         'title',
         'slug',

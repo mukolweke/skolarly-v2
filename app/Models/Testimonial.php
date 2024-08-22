@@ -9,6 +9,8 @@ class Testimonial extends Model
 {
     use HasFactory;
 
+    const PAGINATE_PER_PAGE = 10;
+
     protected $fillable = [
         'name',
         'content',
