@@ -5,15 +5,16 @@ import vue from '@vitejs/plugin-vue'
 export default defineConfig({
     resolve: {
         alias: {
-          vue: 'vue/dist/vue.esm-bundler.js',
-          '@': 'resources'
-        }
-      },
+            vue: "vue/dist/vue.esm-bundler.js",
+            "@": "resources",
+            "/storage": "/storage",
+        },
+    },
     plugins: [
         laravel({
-            input: ['resources/css/app.css', 'resources/js/app.js'],
+            input: ["resources/css/app.css", "resources/js/app.js"],
             refresh: true,
-            publicDirectory: 'public_html',
+            publicDirectory: "public_html",
         }),
 
         vue(),

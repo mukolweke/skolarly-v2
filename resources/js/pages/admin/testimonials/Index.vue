@@ -131,17 +131,22 @@ onMounted(getTestimonials);
 
       <button-view @click="toggleShowModal" class="w-1/6" label="Create Testimonial" />
     </div>
+
     <div class="mt-10">
       <!-- Testimonials Table Listing -->
       <table-view
         :items="testimonials.data"
-        :headers="['id', 'name', 'content', 'updated_date']"
+        :headers="['id', 'name', 'content', 'image_url','updated_date']"
         @delete="deleteTestimonial"
         @update="updateTestimonial"
       >
-        <template v-slot:details="{ item }">
-          <show-view :testimonial="item" />
+        <template v-slot:image_url="{ item }">
+          <img :src="item.image_url" alt="poll">
         </template>
+
+        <template v-slot:details="{ item }">
+            <show-view :testimonial="item" />
+          </template>
 
         <template v-slot:update="{ item }">
           <manage-form

@@ -27,27 +27,52 @@ class TestimonialController extends Controller
 
     public function store(TestimonialPostRequest $request)
     {
-        $testimonial = $this->repository->create($request->validated());
+        $testimonial = $this->repository->create($request->only('name', 'content'));
 
-        return response()->json($testimonial, 201);
+        if ($request->hasFile('image')) {
+            $fileName = $this->generateImageFileName($request);
+
+            $testimonial->addMediaFromRequest('image')->usingFileName($fileName)
+                ->toMediaCollection('testimonials');
+        }
+
+        return response()->json(['message' => 'Testimonial created successfully!', 'testimonial' => $testimonial], 200);
     }
 
     public function show(Testimonial $testimonial)
     {
-        return response()->json(TestimonialTransformer::transform($testimonial), 200);;
+        return response()->json(TestimonialTransformer::transform($testimonial), 200);
+    }
+
+    private function generateImageFileName($request)
+    {
+        $originalName = pathinfo($request->file('image')->getClientOriginalName(), PATHINFO_FILENAME);
+        $encodedName = base64_encode($originalName);
+        return $encodedName . '.' . $request->file('image')->getClientOriginalExtension();
     }
 
     public function update(TestimonialPostRequest $request, Testimonial $testimonial)
     {
-        $testimonial = $this->repository->update($testimonial, $request->validated());
+        $testimonial = $this->repository->update($testimonial, $request->only('name', 'content'));
 
-        return response()->json($testimonial, 200);
+        if ($request->hasFile('image')) {
+            if ($testimonial->hasMedia('testimonials')) {
+                $testimonial->clearMediaCollection('testimonials');
+            }
+
+            $fileName = $this->generateImageFileName($request);
+
+            $testimonial->addMediaFromRequest('image')->usingFileName($fileName)
+                ->toMediaCollection('testimonials');
+        }
+
+        return response()->json(['message' => 'Testimonial updated successfully!', 'testimonial' => $testimonial], 201);
     }
 
     public function destroy(Testimonial $testimonial)
     {
         $this->repository->delete($testimonial);
 
-        return response()->json(null, 204);
+        return response()->json(['message' => 'Testimonial deleted successfully!', 'testimonial' => null], 204);
     }
 }
