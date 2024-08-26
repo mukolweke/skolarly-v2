@@ -8,6 +8,11 @@ const TextareaField = defineAsyncComponent(() =>
     import("../../../components/shared/TextareaField.vue")
 );
 
+import AlertView from '../../../components/shared/Alert.vue';
+import { useAlert } from '../../../composables/useAlert';
+
+const { alert, showAlert } = useAlert();
+
 const props = defineProps({
     testimonial: {
         type: Object,
@@ -39,11 +44,15 @@ const saveTestimonial = async () => {
 
         if (response.status == 201 || response.status == 200) {
             emit('success')
+
+            showAlert('success', 'This is a success alert!');
+        } else {
+            showAlert('warning', 'This is a warning alert!');
         }
-        console.log("success message alert", response);
     } catch (error) {
         if (error.response && error.response.data.errors) {
             emit('error')
+            showAlert('danger', 'This is a danger alert!');
             errors.value = error.response.data.errors;
         }
     }
@@ -53,6 +62,8 @@ defineExpose({ saveTestimonial });
 </script>
 
 <template>
+    <AlertView v-if="alert.visible" :type="alert.type" :message="alert.message" />
+
     <form @submit.prevent="saveTestimonial" class="min-w-[500px]">
         <input-field label="name" v-model="manageForm.name" :error="errors.name ? errors.name[0] : ''" />
         <textarea-field label="content" v-model="manageForm.content" :error="errors.content ? errors.content[0] : ''" />

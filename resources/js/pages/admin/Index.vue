@@ -1,7 +1,5 @@
 <script setup>
 import { ListBulletIcon, ChatBubbleBottomCenterTextIcon, BuildingOfficeIcon } from "@heroicons/vue/24/outline";
-
-import TableView from '../../components/shared/Table.vue'
 </script>
 
 <template>
@@ -54,9 +52,6 @@ import TableView from '../../components/shared/Table.vue'
 
             <h4>Coming Soon</h4>
             </div>
-             <!-- <table-view
-             :items="[1,2,3,4,5]"
-             :headers="['id', 'name', 'email']" :show-actions="false" /> -->
         </section>
     </div>
 </template>
