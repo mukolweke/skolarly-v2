@@ -32,6 +32,11 @@ const routes = [
         meta: { layout: "DefaultLayout" },
     },
     {
+        path: "/auth",
+        component: () => import("./auth/Index.vue"),
+        meta: { layout: null },
+    },
+    {
         path: "/admin",
         component: () => import("./admin/Index.vue"),
         meta: { layout: "AdminLayout" },
@@ -62,7 +67,7 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-    if (!to.meta.layout) {
+    if (to.meta.layout === undefined) {
         to.meta.layout = "DefaultLayout";
     }
     next();

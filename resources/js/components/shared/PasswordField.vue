@@ -25,7 +25,7 @@ const updateValue = (event) => {
 
 <template>
     <div class="flex flex-col mb-5 relative w-full">
-        <label :for="label" class="mb-2 text-sm">{{ label }}</label>
+        <label :for="label" class="mb-2 text-sm capitalize">{{ label }}</label>
         <div class="w-full flex items-center">
             <input
                 :type="passwordVisible ? 'text' : 'password'"

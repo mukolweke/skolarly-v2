@@ -11,10 +11,14 @@ import { useRoute } from "vue-router";
 const route = useRoute();
 
 const layout = computed(() => {
-    return route.meta.layout
-        ? defineAsyncComponent(() =>
-              import(`./layouts/${route.meta.layout}.vue`)
-          )
-        : defineAsyncComponent(() => import("./layouts/DefaultLayout.vue"));
+    const layoutName = route.meta.layout;
+
+    if (layoutName === "" || layoutName === null) {
+        return defineAsyncComponent(() => import("./layouts/NoLayout.vue"));
+    }
+
+    return defineAsyncComponent(() =>
+        import(`./layouts/${layoutName || 'DefaultLayout'}.vue`)
+    );
 });
 </script>
