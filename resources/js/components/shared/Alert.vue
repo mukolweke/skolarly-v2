@@ -3,9 +3,9 @@
         <div
             v-if="visible"
             :class="alertClass"
-            class="absolute right-5 top-5 p-4 rounded-md w-[400px]"
+            class="absolute right-5 top-5 p-4 rounded-md w-[400px] test"
         >
-            <div class="w-[400px]">
+            <div class="w-full">
                 <div class="flex items-center justify-between mb-2">
                     <h5
                         class="font-medium capitalize text-base flex items-center gap-2"
@@ -49,7 +49,7 @@ const props = defineProps({
 const visible = ref(true);
 
 const alertClass = computed(() => {
-    const baseClasses = "w-full text-sm";
+    const baseClasses = "text-sm";
     switch (props.type) {
         case "success":
             return `${baseClasses} bg-green-100 text-green-700 border border-green-400`;
