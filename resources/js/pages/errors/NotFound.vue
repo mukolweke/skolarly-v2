@@ -16,6 +16,3 @@
 import { ArrowLeftIcon } from '@heroicons/vue/24/outline';
 </script>
 
-<style scoped>
-
-</style>
