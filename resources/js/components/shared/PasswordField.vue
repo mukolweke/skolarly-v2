@@ -8,6 +8,14 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    helpText: {
+        type: String,
+        default: "",
+    },
+    error: {
+        type: String,
+        default: "",
+    },
 });
 
 const emit = defineEmits(["update:modelValue"]);
@@ -48,5 +56,7 @@ const updateValue = (event) => {
                 />
             </div>
         </div>
+        <p v-if="helpText" class="text-xs mt-px text-gray-500 font-karla font-medium">{{ helpText }}</p>
+        <p v-if="error" class="text-xs mt-px text-red-500 font-karla font-medium">{{ error }}</p>
     </div>
 </template>
