@@ -57,6 +57,11 @@ const routes = [
         component: () => import("./admin/profile/Index.vue"),
         meta: { layout: "AdminLayout", requiresAuth: true },
     },
+    {
+        path: "/:pathMatch(.*)*",
+        component: () => import("./errors/NotFound.vue"),
+        meta: { layout: "DefaultLayout" },
+    },
 ];
 
 const router = createRouter({
